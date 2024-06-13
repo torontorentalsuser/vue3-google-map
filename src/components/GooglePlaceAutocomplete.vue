@@ -30,6 +30,19 @@ export default defineComponent({
       type: String,
       default: "",
     },
+    // Field options
+    name: {
+      type: String,
+      required: false,
+    },
+    placeholder: {
+      type: String,
+      required: false,
+    },
+    modelValue: {
+      type: String,
+      required: false,
+    },
     // Autocomplete options:
     bounds: {
       type: Object as PropType<google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral>,
@@ -53,8 +66,9 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const autocompleteRef = ref<HTMLElement>();
+    const autocompleteRef = ref<HTMLInputElement>();
     const ready = ref(false);
+    const modelValue = ref('');
 
     const autocomplete = ref<google.maps.places.Autocomplete>();
     const api = ref<typeof google.maps>();
@@ -108,14 +122,23 @@ export default defineComponent({
       if (autocomplete.value) api.value?.event.clearInstanceListeners(autocomplete.value);
     });
 
-    return { autocompleteRef, ready, autocomplete, api };
+    const attributes = {
+      class: "google-autocomplete-input",
+      name: props.name || "google-autocomplete-input",
+      placeholder: props.placeholder || "",
+      ref: "autocompleteRef",
+      type: "text",
+      value: modelValue.value || "",
+    };
+
+    return { autocompleteRef, ready, autocomplete, api, attributes };
   },
 })
 </script>
 
 <template>
   <div>
-    <input ref="autocompleteRef" class="google-autocomplete-input" />
+    <input v-bind="attributes" />
     <slot v-bind="{ ready, autocomplete, api }" />
   </div>
 </template>
