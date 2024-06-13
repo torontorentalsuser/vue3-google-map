@@ -6,6 +6,8 @@ export const apiSymbol: InjectionKey<Ref<typeof google.maps | undefined>> = Symb
 export const markerSymbol: InjectionKey<Ref<google.maps.Marker | undefined>> = Symbol("marker");
 export const markerClusterSymbol: InjectionKey<Ref<MarkerClusterer | undefined>> = Symbol("markerCluster");
 export const customMarkerClassSymbol = (Symbol("CustomMarker") as unknown) as "CustomMarker";
+export const autocompleteSymbol: InjectionKey<Ref<google.maps.places.Autocomplete | undefined>> = Symbol("autocomplete");
+
 /**
  * Utilitary flag for components that need to know the map
  * was fully loaded (including its tiles) to decide their behavior
