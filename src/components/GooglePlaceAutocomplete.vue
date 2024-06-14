@@ -6,7 +6,7 @@ import { Loader, Library } from "@googlemaps/js-api-loader";
 let loaderInstance: Loader | undefined;
 
 export default defineComponent({
-  emits: ["changed", "place_changed"],
+  emits: ["place_changed"],
   props: {
     apiPromise: {
       type: Promise as PropType<Promise<typeof google>>,
