@@ -6,6 +6,7 @@ import { Loader, Library } from "@googlemaps/js-api-loader";
 let loaderInstance: Loader | undefined;
 
 export default defineComponent({
+  emits: ["changed", "place_changed"],
   props: {
     apiPromise: {
       type: Promise as PropType<Promise<typeof google>>,
@@ -41,6 +42,11 @@ export default defineComponent({
     },
     modelValue: {
       type: String,
+      required: false,
+    },
+    inputEvents: {
+      type: Object as PropType<Record<string, (e: Event) => void>>,
+      default: {},
       required: false,
     },
     // Autocomplete options:
@@ -103,7 +109,9 @@ export default defineComponent({
       api.value = markRaw(_google.maps);
       autocomplete.value = markRaw(new _google.maps.places.Autocomplete(autocompleteRef.value as HTMLInputElement, resolveOptions()));
 
-      autocomplete.value?.addListener("place_changed", (e: unknown) => emit("place_changed", e));
+      autocomplete.value?.addListener("place_changed", () => {
+        emit("place_changed", autocomplete.value?.getPlace())
+      });
 
       ready.value = true;
     };
@@ -126,19 +134,24 @@ export default defineComponent({
       class: "google-autocomplete-input",
       name: props.name || "google-autocomplete-input",
       placeholder: props.placeholder || "",
-      ref: "autocompleteRef",
       type: "text",
       value: modelValue.value || "",
     };
 
-    return { autocompleteRef, ready, autocomplete, api, attributes };
+    return {
+      api,
+      attributes,
+      autocomplete,
+      autocompleteRef,
+      ready,
+    };
   },
 })
 </script>
 
 <template>
   <div>
-    <input v-bind="attributes" />
+    <input ref="autocompleteRef" v-bind="attributes" v-on="$props.inputEvents" />
     <slot v-bind="{ ready, autocomplete, api }" />
   </div>
 </template>

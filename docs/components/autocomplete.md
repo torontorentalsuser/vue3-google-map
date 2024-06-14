@@ -5,11 +5,9 @@ import { apiPromise } from '@docs/shared'
 const center = { lat: 40.689247, lng: -74.044502 }
 </script>
 
-# Marker
-
-Use the `Marker` component to draw markers, drop pins or any custom icons on a map.
-
 ## Options
+
+See the [AutocompleteOptions](https://developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions) for supported attributes.
 
 
 ```vue
@@ -20,12 +18,22 @@ import { GooglePlaceAutocomplete } from 'vue3-google-map'
 <template>
   <GooglePlaceAutocomplete
     api-key="YOUR_GOOGLE_MAPS_API_KEY"
-    place_changed="myCallback"
+    place_changed="placeChangedCallback"
     :component-restrictions="{ country: 'CA' }"
     :fields="['address_components', 'geometry']"
+    :input-events="{
+      'focus': onInputElementFocusCallback,
+      'click': onInputClickCallback,
+    }"
     :types="['address']"
   ></GooglePlaceAutocomplete>
 </template>
 ```
 
 ## Events
+
+You can listen for [the following events](https://developers.google.com/maps/documentation/javascript/reference/places-widget#Autocomplete-Events) on the `GooglePlaceAutocomplete` component.
+
+Note: unlike the Google's implementation, the `place_changed` event will pass the the selected place as first (and only) argument.
+
+Additional native events can be bound to the input element using the `:input-events` attribute.
