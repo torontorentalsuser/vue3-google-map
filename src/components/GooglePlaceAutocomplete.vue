@@ -150,8 +150,5 @@ export default defineComponent({
 </script>
 
 <template>
-  <div>
-    <input ref="autocompleteRef" v-bind="attributes" v-on="$props.inputEvents" />
-    <slot v-bind="{ ready, autocomplete, api }" />
-  </div>
+  <input ref="autocompleteRef" v-bind="attributes" v-on="$props.inputEvents" />
 </template>
