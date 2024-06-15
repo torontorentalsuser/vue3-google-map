@@ -17,6 +17,7 @@ import { GooglePlaceAutocomplete } from 'vue3-google-map'
 
 <template>
   <GooglePlaceAutocomplete
+    ref="address"
     api-key="YOUR_GOOGLE_MAPS_API_KEY"
     place_changed="placeChangedCallback"
     :component-restrictions="{ country: 'CA' }"
@@ -34,6 +35,8 @@ import { GooglePlaceAutocomplete } from 'vue3-google-map'
 
 You can listen for [the following events](https://developers.google.com/maps/documentation/javascript/reference/places-widget#Autocomplete-Events) on the `GooglePlaceAutocomplete` component.
 
-Note: unlike the Google's implementation, the `place_changed` event will pass the the selected place as first (and only) argument.
+Note that unlike the Google's implementation, the `place_changed` event will pass the the selected place as first (and only) argument.
+
+The input's selected value can otherwhise be accessed like this: `this.$refs.address.autocomplete.getPlace();`
 
 Additional native events can be bound to the input element using the `:input-events` attribute.
