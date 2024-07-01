@@ -14,3 +14,7 @@ The main mapping component is `GoogleMap`, however the following components are 
 - [Custom Control](./custom-control.md)
 - [Marker Cluster](./marker-cluster.md)
 - [Heatmap Layer](./heatmap-layer.md)
+
+The Google Place Autocomplete is exposed as `GooglePlaceAutocomplete`:
+
+- [Google Place Autocomplete](./autocomplete.md)
